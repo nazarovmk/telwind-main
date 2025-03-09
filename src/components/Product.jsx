@@ -28,7 +28,7 @@ function Product({ product }) {
       <div className="relative inline-block">
         <Link to={`/product/${id}`}>
           <img
-            className="mb-2 w-60 h-60 object-contain"
+            className="mb-2 w-60 h-60 object-contain transition-transform duration-300 hover:scale-110"
             src={product.images[0]}
             alt=""
           />
@@ -66,11 +66,11 @@ function Product({ product }) {
           ✨ {product.rating} - reyting
         </p>
         <p className="text-gray-500 font-medium">
-          {product.discountPercentage} - chegirma
+          ${product.discountPercentage} - chegirma
         </p>
 
         <span className="flex items-center justify-between mb-4">
-          <p className="text-xl font-semibold">{product.price} - sum</p>
+          <p className="text-xl font-semibold">${product.price}</p>
           <button onClick={(e) => addProduct(e, product)}>
             <FaShoppingBasket className="w-[30px] h-[30px]" />
           </button>

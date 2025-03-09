@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { GlobalProvider } from "../hooks/GlobalProvider";
 import { IoMdAddCircle, IoIosRemoveCircle } from "react-icons/io";
+import { BsCart4 } from "react-icons/bs";
 
 function Card() {
   const { dispatch, products, decrementAmount, incrementAmount, totalPrice } =
@@ -9,10 +10,11 @@ function Card() {
   if (products.length == 0) {
     return (
       <section className="flex justify-center flex-col gap-5">
-        <h1 className="text-center text-3xl ">Empty</h1>
+        <h1 className="text-center text-3xl ">The product is finished</h1>
         <div className="mx-auto">
           <Link to={"/"} className="btn btn-primary px-10">
-            Buy
+            <BsCart4 />
+            Buy Now
           </Link>
         </div>
       </section>
@@ -43,8 +45,8 @@ function Card() {
                   <Link to={`/product/${product.id}`}>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
-                        <div className="mask mask-squircle h-14 w-14">
-                          <img src={product.thumbnail} alt={product.title} />
+                        <div className="mask mask-squircle h-14 w-14 transition-transform duration-300 hover:scale-110">
+                          <img src={product.images[0]} alt={product.title} />
                         </div>
                       </div>
                       <div>
@@ -63,7 +65,7 @@ function Card() {
                     Shipping: {product.shippingInformation}
                   </span>
                 </td>
-                <td>$ {product.price}</td>
+                <td>${product.price}</td>
                 <td>
                   <div className="flex gap-4 items-center">
                     <IoIosRemoveCircle
@@ -94,7 +96,7 @@ function Card() {
                         payload: product.id,
                       })
                     }
-                    className="btn btn-secondary btn-xs"
+                    className="btn btn-secondary btn-xs transition-transform duration-300 hover:scale-110"
                   >
                     Delete
                   </button>

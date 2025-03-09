@@ -41,7 +41,11 @@ function Product() {
           </h2>
           <div className="flex gap-15">
             <div className="p-7 bg-gray-200 w-[500px] rounded-2xl">
-              <img className="w-[500px] h-[500px]" src={data.images} alt="" />
+              <img
+                className="w-[500px] h-[500px] transition-transform duration-300 hover:scale-110 cursor-pointer"
+                src={data.images[0]}
+                alt=""
+              />
             </div>
             <div>
               <h2 className="w-[500px] mb-3 text-2xl">{data.description}</h2>
@@ -64,25 +68,29 @@ function Product() {
                 {data.availabilityStatus}
               </h2>
               <h3 className="mb-2 text-[20px]">
-                <span className="text-blue-700 font-extrabold">brand:</span>
+                <span className="text-blue-700 font-extrabold">brand: </span>
                 {data.brand}
               </h3>
               <h3 className="mb-2 text-[20px]">
-                <span className="text-blue-700 font-extrabold">category:</span>
+                <span className="text-blue-700 font-extrabold">category: </span>
                 {data.category}
               </h3>
               <h3 className="mb-2 text-[20px]">
-                <span className="text-blue-700 font-extrabold">rating:</span> ✨
+                <span className="text-blue-700 font-extrabold">rating: </span>✨
                 {data.rating}
               </h3>
+              <p className="mb-2 text-[20px]">
+                <span className="text-blue-700 font-extrabold">chegirma: </span>
+                ${data.discountPercentage}
+              </p>
               <div className="flex justify-between items-center">
                 <h2 className="text-3xl">
-                  <span className="text-blue-800 font-extrabold">Price:</span>
+                  <span className="text-blue-800 font-extrabold">Price: </span>$
                   {data.price}
                 </h2>
                 <button
                   onClick={() => addProduct(data)}
-                  className="btn btn-primary px-10 py-6 cursor-pointer"
+                  className="btn btn-primary px-10 py-6 cursor-pointer transition-transform duration-300 hover:scale-110"
                 >
                   Add
                 </button>
