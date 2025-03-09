@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaCartArrowDown } from "react-icons/fa";
 import { MenuLinks } from "./MenuLinks";
+import { GlobalProvider } from "../hooks/GlobalProvider";
 
 function Header() {
+  const { totalAmound } = GlobalProvider();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
@@ -67,10 +69,14 @@ function Header() {
             )}
           </button>
 
-          {/* Savat ikonkasi */}
-          <Link to={"/card"}>
-            <FaCartArrowDown className="text-2xl cursor-pointer" />
-          </Link>
+          <div className="indicator">
+            <span className="indicator-item badge badge-primary">
+              {totalAmound}
+            </span>
+            <Link to={"/card"}>
+              <FaCartArrowDown className="text-2xl cursor-pointer" />
+            </Link>
+          </div>
         </div>
       </nav>
     </header>

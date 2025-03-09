@@ -1,31 +1,50 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaShoppingBasket } from "react-icons/fa";
-import { IoMdAddCircle, IoIosRemoveCircle } from "react-icons/io";
 import { useState } from "react";
 import { GlobalProvider } from "../hooks/GlobalProvider";
+import { toast } from "react-toastify";
 
 function Product({ product }) {
   const [isLiked, setIsLiked] = useState(false);
   const { id, title } = product;
-  const { dispatch } = GlobalProvider();
+  const { dispatch, products } = GlobalProvider();
+
+  const addProduct = (e, product) => {
+    e.preventDefault();
+    const item = products.find((p) => p.id == product.id);
+    if (item) {
+      toast.warning("Already Added");
+      return;
+    }
+    toast.success("Product Added");
+    dispatch({
+      type: "ADD_PRODUCT",
+      payload: { ...product, amount: 1 },
+    });
+  };
 
   return (
-    <div className="bg-base-300 pt-0 pl-[20px] pb-[20px] pr-[7px] rounded-2xl cursor-pointer transition-transform duration-100 ease-in-out hover:translate-x-2 hover:-translate-x-2">
+    <div className="bg-base-300 pt-0 pl-[20px] pb-[20px] pr-[7px] rounded-2xl cursor-pointer transition-transform duration-100 ease-in-out">
       <div className="relative inline-block">
-        <img
-          className="mb-2 w-60 h-60 object-contain"
-          src={product.images[0]}
-          alt=""
-        />
+        <Link to={`/product/${id}`}>
+          <img
+            className="mb-2 w-60 h-60 object-contain"
+            src={product.images[0]}
+            alt=""
+          />
+        </Link>
         <button
-          className={`btn btn-circle absolute top-0 right-0 m-2 bg-white shadow-lg transition-colors duration-200 ${
+          className={`btn btn-circle absolute top-0 right-0 mt-2 bg-white shadow-lg transition-colors duration-200 ${
             isLiked ? "text-red-600" : "text-gray-500"
           }`}
-          onClick={() => setIsLiked(!isLiked)}
+          onClick={(e) => {
+            e.preventDefault();
+            setIsLiked(!isLiked);
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            fill={isLiked ? "red" : "none"}
             viewBox="0 0 24 24"
             strokeWidth="2.5"
             stroke="currentColor"
@@ -41,37 +60,22 @@ function Product({ product }) {
       </div>
 
       <Link to={`/product/${id}`}>
-        <h2 className="text-xl font-semibold mb-1">{product.title}</h2>
-      </Link>
-      <p className="text-lg font-bold text-gray-400 mb-2">
-        ✨ {product.rating} - reyting
-      </p>
-      <p className="text-gray-500 font-medium">
-        {product.discountPercentage} - chegirma
-      </p>
-      <span className="flex items-center justify-between mb-4">
-        <p className="text-xl font-semibold">{product.price} - sum</p>
-        <Link to={"/card"}>
-          <FaShoppingBasket className="w-[30px] h-[30px]" />
-        </Link>
-      </span>
-      <div className="flex border border-gray-400 p-4 justify-between rounded-xl">
-        <IoIosRemoveCircle
-          onClick={(e) => {
-            e.preventDefault();
-            dispatch({ type: "DELETE_PRODUCT", payload: product.id });
-          }}
-          className="text-xl"
-        />
+        <h2 className="text-xl font-semibold mb-2">{product.title}</h2>
 
-        <IoMdAddCircle
-          onClick={(e) => {
-            e.preventDefault();
-            dispatch({ type: "ADD_PRODUCT", payload: product });
-          }}
-          className="text-xl"
-        />
-      </div>
+        <p className="text-lg font-bold text-gray-400 mb-2">
+          ✨ {product.rating} - reyting
+        </p>
+        <p className="text-gray-500 font-medium">
+          {product.discountPercentage} - chegirma
+        </p>
+
+        <span className="flex items-center justify-between mb-4">
+          <p className="text-xl font-semibold">{product.price} - sum</p>
+          <button onClick={(e) => addProduct(e, product)}>
+            <FaShoppingBasket className="w-[30px] h-[30px]" />
+          </button>
+        </span>
+      </Link>
     </div>
   );
 }

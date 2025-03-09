@@ -7,7 +7,6 @@ function Home() {
   const { data, isPending, error } = UseFetch(
     "https://dummyjson.com/products?limit=194"
   );
-  console.log(data);
 
   const [showContent, setShowContent] = useState(false);
 
